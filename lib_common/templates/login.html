@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block additional-cssjs %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <script src="{% static 'js/login_lang.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <h1 class="text-center">{% trans shop_name %}</h1>
+            <div class="">
+                {% if message_error_login %}
+                    {# at some point should change this to flash message #}
+                    <div class="alert alert-warning">
+                        {{ message_error_login }}
+                    </div>
+                {% endif %}
+                <form method="post" action="{% url 'login' %}" novalidate>
+                {% csrf_token %}
+                <p>{{ form.username }}</p>
+                <p>{{ form.password }}</p>
+                <p>
+                    <select name="lang" id="lang" class="form-control">
+                        <option value="?lang=en" {% if lang == 'en' %}selected{% endif %}>English</option>
+                        <option value="?lang=zh-hans" {% if lang == 'zh-hans' %}selected{% endif %}>中文</option>
+                    </select>
+                </p>
+                <button class="btn btn-lg btn-primary btn-block" type="submit" value="login">
+                    {% trans 'Sign in' %}</button>
+                <span class="clearfix"></span>
+                </form>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

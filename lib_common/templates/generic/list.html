@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+	<div class="well">
+		<h3>Notes</h3>
+		<ul>
+			<li>Only logged in user data</li>
+		</ul>
+	</div>
+	<a href="add" class="btn btn-info" role="button">{% trans 'Add' %} {% trans title %}</a>
+	<hr>
+	<h3>{% trans "Listing" %} - {% trans title %}</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				{% for field in fields %}
+					<th>{{ field }}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			{% csrf_token %}
+			{% for row in row_data %}
+				<form action="/order/delete/" method="post">
+					<tr>
+						{% for value in row %}
+							<td>{{ value }}</td>
+						{% endfor %}
+					</tr>
+				</form>
+			{% endfor %}
+			
+		</tbody>
+	</table>
+{% endblock %}
